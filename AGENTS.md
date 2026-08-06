@@ -101,3 +101,21 @@ behavioral changes when the work can be separated.
 - Compatibility, privacy, state migration, and multi-account behavior have been
   considered explicitly.
 - Related developer and bilingual user documentation is updated.
+
+## Cursor Cloud specific instructions
+
+- This package is a library/plugin, not a runnable service. There is no dev
+  server or app to start. "Running" it means the validation ladder above
+  (`npm run check` / `npm run check:fast`) and, if you need to exercise the built
+  artifact, loading `dist/index.js` and calling its default export's `register()`
+  with a mock host (see the module map and `index.ts`).
+- Node.js: the repo requires `>=22.22.3 <23 || >=24.15.0 <25 || >=25.9.0` and the
+  recommended dev version is `.nvmrc` (24.15.0), installed via nvm. The VM ships a
+  separate bundled `node` on `PATH`; the environment is pre-configured so `node`,
+  `npm`, and `npx` resolve to 24.15.0. If a shell ever reports an older `node`,
+  run `nvm use` (reads `.nvmrc`) before invoking bare `node`. All the documented
+  validation commands are `npm`-driven and already run under Node 24.
+- The update script only runs `npm ci`. Do not add build/test/start steps to it;
+  use the `npm run …` scripts in `package.json` for those.
+- `dist/` and `coverage/` are generated (gitignored). Run `npm run build` to
+  regenerate `dist/` before loading the built plugin.
